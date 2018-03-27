@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b67770f38721402f807dfadd84d68e71" Name="Diagram1" ZoomLevel="85" ShowGrid="false" >
+        <EntityTypeShape EntityType="SchoolModel.Institution" Width="1.5" PointX="0.75" PointY="0.5" />
+        <EntityTypeShape EntityType="SchoolModel.Board" Width="1.5" PointX="3.25" PointY="3" />
+        <EntityTypeShape EntityType="SchoolModel.Section" Width="1.5" PointX="9.875" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.Department" Width="1.5" PointX="4.125" PointY="0.5" />
+        <AssociationConnector Association="SchoolModel.InstitutionDepartment" />
+        <EntityTypeShape EntityType="SchoolModel.Hostel" Width="1.5" PointX="0.5" PointY="4.375" />
+        <AssociationConnector Association="SchoolModel.InstitutionHostel" />
+        <EntityTypeShape EntityType="SchoolModel.SM_Class" Width="1.5" PointX="7.625" PointY="3" />
+        <AssociationConnector Association="SchoolModel.SM_ClassSection" />
+        <EntityTypeShape EntityType="SchoolModel.Subject" Width="1.5" PointX="7.625" PointY="0.5" />
+        <EntityTypeShape EntityType="SchoolModel.Batch" Width="1.5" PointX="5.5" PointY="3" />
+        <AssociationConnector Association="SchoolModel.BoardBatch" />
+        <AssociationConnector Association="SchoolModel.BatchSM_Class" />
+        <AssociationConnector Association="SchoolModel.InstitutionBoard" />
+        <AssociationConnector Association="SchoolModel.SM_ClassSubject" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

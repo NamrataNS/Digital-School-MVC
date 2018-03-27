@@ -1,0 +1,517 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SchoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BatchSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BoardId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BoardSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="InstitutionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DepartmentSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InstitutionId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="HOD" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HostelSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="InstitutionId" Type="int" Nullable="false" />
+          <Property Name="Superintendent" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InstitutionSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="web_address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Contact_number" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PostalCode" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SectionSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SM_ClassId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SM_ClassSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BoardId" Type="int" Nullable="false" />
+          <Property Name="BatchId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubjectSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SM_ClassId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BatchSM_Class">
+          <End Role="BatchSet" Type="Self.BatchSet" Multiplicity="1" />
+          <End Role="SM_ClassSet" Type="Self.SM_ClassSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BatchSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SM_ClassSet">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BoardBatch">
+          <End Role="BoardSet" Type="Self.BoardSet" Multiplicity="1" />
+          <End Role="BatchSet" Type="Self.BatchSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoardSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BatchSet">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstitutionBoard">
+          <End Role="InstitutionSet" Type="Self.InstitutionSet" Multiplicity="1" />
+          <End Role="BoardSet" Type="Self.BoardSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstitutionSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BoardSet">
+              <PropertyRef Name="InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstitutionDepartment">
+          <End Role="InstitutionSet" Type="Self.InstitutionSet" Multiplicity="1" />
+          <End Role="DepartmentSet" Type="Self.DepartmentSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstitutionSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DepartmentSet">
+              <PropertyRef Name="InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstitutionHostel">
+          <End Role="InstitutionSet" Type="Self.InstitutionSet" Multiplicity="1" />
+          <End Role="HostelSet" Type="Self.HostelSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstitutionSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HostelSet">
+              <PropertyRef Name="InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SM_ClassSection">
+          <End Role="SM_ClassSet" Type="Self.SM_ClassSet" Multiplicity="1" />
+          <End Role="SectionSet" Type="Self.SectionSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SM_ClassSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SectionSet">
+              <PropertyRef Name="SM_ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SM_ClassSubject">
+          <End Role="SM_ClassSet" Type="Self.SM_ClassSet" Multiplicity="1" />
+          <End Role="SubjectSet" Type="Self.SubjectSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SM_ClassSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubjectSet">
+              <PropertyRef Name="SM_ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolModelStoreContainer">
+          <EntitySet Name="BatchSet" EntityType="Self.BatchSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BoardSet" EntityType="Self.BoardSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepartmentSet" EntityType="Self.DepartmentSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HostelSet" EntityType="Self.HostelSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InstitutionSet" EntityType="Self.InstitutionSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SectionSet" EntityType="Self.SectionSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SM_ClassSet" EntityType="Self.SM_ClassSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubjectSet" EntityType="Self.SubjectSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BatchSM_Class" Association="Self.FK_BatchSM_Class">
+            <End Role="BatchSet" EntitySet="BatchSet" />
+            <End Role="SM_ClassSet" EntitySet="SM_ClassSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BoardBatch" Association="Self.FK_BoardBatch">
+            <End Role="BoardSet" EntitySet="BoardSet" />
+            <End Role="BatchSet" EntitySet="BatchSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstitutionBoard" Association="Self.FK_InstitutionBoard">
+            <End Role="InstitutionSet" EntitySet="InstitutionSet" />
+            <End Role="BoardSet" EntitySet="BoardSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstitutionDepartment" Association="Self.FK_InstitutionDepartment">
+            <End Role="InstitutionSet" EntitySet="InstitutionSet" />
+            <End Role="DepartmentSet" EntitySet="DepartmentSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstitutionHostel" Association="Self.FK_InstitutionHostel">
+            <End Role="InstitutionSet" EntitySet="InstitutionSet" />
+            <End Role="HostelSet" EntitySet="HostelSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SM_ClassSection" Association="Self.FK_SM_ClassSection">
+            <End Role="SM_ClassSet" EntitySet="SM_ClassSet" />
+            <End Role="SectionSet" EntitySet="SectionSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SM_ClassSubject" Association="Self.FK_SM_ClassSubject">
+            <End Role="SM_ClassSet" EntitySet="SM_ClassSet" />
+            <End Role="SubjectSet" EntitySet="SubjectSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SchoolModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="SchoolModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="InstitutionSet" EntityType="SchoolModel.Institution" />
+          <EntitySet Name="BoardSet" EntityType="SchoolModel.Board" />
+          <EntitySet Name="SectionSet" EntityType="SchoolModel.Section" />
+          <EntitySet Name="DepartmentSet" EntityType="SchoolModel.Department" />
+          <AssociationSet Name="InstitutionDepartment" Association="SchoolModel.InstitutionDepartment">
+            <End Role="Institution" EntitySet="InstitutionSet" />
+            <End Role="Department" EntitySet="DepartmentSet" />
+          </AssociationSet>
+          <EntitySet Name="HostelSet" EntityType="SchoolModel.Hostel" />
+          <AssociationSet Name="InstitutionHostel" Association="SchoolModel.InstitutionHostel">
+            <End Role="Institution" EntitySet="InstitutionSet" />
+            <End Role="Hostel" EntitySet="HostelSet" />
+          </AssociationSet>
+          <EntitySet Name="SM_ClassSet" EntityType="SchoolModel.SM_Class" />
+          <AssociationSet Name="SM_ClassSection" Association="SchoolModel.SM_ClassSection">
+            <End Role="SM_Class" EntitySet="SM_ClassSet" />
+            <End Role="Section" EntitySet="SectionSet" />
+          </AssociationSet>
+          <EntitySet Name="SubjectSet" EntityType="SchoolModel.Subject" />
+          <EntitySet Name="BatchSet" EntityType="SchoolModel.Batch" />
+          <AssociationSet Name="BoardBatch" Association="SchoolModel.BoardBatch">
+            <End Role="Board" EntitySet="BoardSet" />
+            <End Role="Batch" EntitySet="BatchSet" />
+          </AssociationSet>
+          <AssociationSet Name="BatchSM_Class" Association="SchoolModel.BatchSM_Class">
+            <End Role="Batch" EntitySet="BatchSet" />
+            <End Role="SM_Class" EntitySet="SM_ClassSet" />
+          </AssociationSet>
+          <AssociationSet Name="InstitutionBoard" Association="SchoolModel.InstitutionBoard">
+            <End Role="Institution" EntitySet="InstitutionSet" />
+            <End Role="Board" EntitySet="BoardSet" />
+          </AssociationSet>
+          <AssociationSet Name="SM_ClassSubject" Association="SchoolModel.SM_ClassSubject">
+            <End Role="SM_Class" EntitySet="SM_ClassSet" />
+            <End Role="Subject" EntitySet="SubjectSet" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Institution">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="web_address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Contact_number" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Department" Relationship="SchoolModel.InstitutionDepartment" FromRole="Institution" ToRole="Department" />
+          <NavigationProperty Name="Hostel" Relationship="SchoolModel.InstitutionHostel" FromRole="Institution" ToRole="Hostel" />
+          <NavigationProperty Name="Board" Relationship="SchoolModel.InstitutionBoard" FromRole="Institution" ToRole="Board" />
+        </EntityType>
+        <EntityType Name="Board">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Batch" Relationship="SchoolModel.BoardBatch" FromRole="Board" ToRole="Batch" />
+          <NavigationProperty Name="Institution" Relationship="SchoolModel.InstitutionBoard" FromRole="Board" ToRole="Institution" />
+          <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SM_Class" Relationship="SchoolModel.SM_ClassSection" FromRole="Section" ToRole="SM_Class" />
+          <Property Name="SM_ClassId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Institution" Relationship="SchoolModel.InstitutionDepartment" FromRole="Department" ToRole="Institution" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="HOD" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <Association Name="InstitutionDepartment">
+          <End Type="SchoolModel.Institution" Role="Institution" Multiplicity="1" />
+          <End Type="SchoolModel.Department" Role="Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Hostel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Institution" Relationship="SchoolModel.InstitutionHostel" FromRole="Hostel" ToRole="Institution" />
+          <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="Superintendent" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <Association Name="InstitutionHostel">
+          <End Type="SchoolModel.Institution" Role="Institution" Multiplicity="1" />
+          <End Type="SchoolModel.Hostel" Role="Hostel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hostel">
+              <PropertyRef Name="InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SM_Class">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BoardId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Section" Relationship="SchoolModel.SM_ClassSection" FromRole="SM_Class" ToRole="Section" />
+          <NavigationProperty Name="Batch" Relationship="SchoolModel.BatchSM_Class" FromRole="SM_Class" ToRole="Batch" />
+          <Property Name="BatchId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Subject" Relationship="SchoolModel.SM_ClassSubject" FromRole="SM_Class" ToRole="Subject" />
+        </EntityType>
+        <Association Name="SM_ClassSection">
+          <End Type="SchoolModel.SM_Class" Role="SM_Class" Multiplicity="1" />
+          <End Type="SchoolModel.Section" Role="Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SM_Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="SM_ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="SM_Class" Relationship="SchoolModel.SM_ClassSubject" FromRole="Subject" ToRole="SM_Class" />
+          <Property Name="SM_ClassId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Batch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Board" Relationship="SchoolModel.BoardBatch" FromRole="Batch" ToRole="Board" />
+          <Property Name="BoardId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SM_Class" Relationship="SchoolModel.BatchSM_Class" FromRole="Batch" ToRole="SM_Class" />
+        </EntityType>
+        <Association Name="BoardBatch">
+          <End Type="SchoolModel.Board" Role="Board" Multiplicity="1" />
+          <End Type="SchoolModel.Batch" Role="Batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Batch">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BatchSM_Class">
+          <End Type="SchoolModel.Batch" Role="Batch" Multiplicity="1" />
+          <End Type="SchoolModel.SM_Class" Role="SM_Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SM_Class">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InstitutionBoard">
+          <End Type="SchoolModel.Institution" Role="Institution" Multiplicity="1" />
+          <End Type="SchoolModel.Board" Role="Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SM_ClassSubject">
+          <End Type="SchoolModel.SM_Class" Role="SM_Class" Multiplicity="1" />
+          <End Type="SchoolModel.Subject" Role="Subject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SM_Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subject">
+              <PropertyRef Name="SM_ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer" CdmEntityContainer="SchoolModelContainer">
+    <EntitySetMapping Name="InstitutionSet">
+      <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Institution)">
+        <MappingFragment StoreEntitySet="InstitutionSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="web_address" ColumnName="web_address" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Contact_number" ColumnName="Contact_number" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BoardSet">
+      <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Board)">
+        <MappingFragment StoreEntitySet="BoardSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="InstitutionId" ColumnName="InstitutionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SectionSet">
+      <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Section)">
+        <MappingFragment StoreEntitySet="SectionSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SM_ClassId" ColumnName="SM_ClassId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DepartmentSet">
+      <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Department)">
+        <MappingFragment StoreEntitySet="DepartmentSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="InstitutionId" ColumnName="InstitutionId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="HOD" ColumnName="HOD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HostelSet">
+      <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Hostel)">
+        <MappingFragment StoreEntitySet="HostelSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="InstitutionId" ColumnName="InstitutionId" />
+          <ScalarProperty Name="Superintendent" ColumnName="Superintendent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SM_ClassSet">
+      <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.SM_Class)">
+        <MappingFragment StoreEntitySet="SM_ClassSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BoardId" ColumnName="BoardId" />
+          <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubjectSet">
+      <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Subject)">
+        <MappingFragment StoreEntitySet="SubjectSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SM_ClassId" ColumnName="SM_ClassId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BatchSet">
+      <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Batch)">
+        <MappingFragment StoreEntitySet="BatchSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BoardId" ColumnName="BoardId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
